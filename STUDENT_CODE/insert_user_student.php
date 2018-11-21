@@ -58,15 +58,9 @@ if (isset($_POST['btn_save']))
 	// Write the SQL query using PREPARE
     $newuserquery=$conn->prepare("INSERT INTO user_info (person_id, firstname, lastname, dateofbirth, email, 
 								   emaildisplay) VALUES(?, ?, ?, ?, ?, ?)");
-								   // The above line inserts the person_id, firstname, lastname, dateofbirth, email
-								   // and whether the user wants their email to be displayed. This is done with a
-								   // INSERT command in SQL. The Values commands hold parameters denoted with a
-								   // '?'
 
     // bind parameters for the prepared query, remember there is ONE integer and FIVE strings
-    $newuserquery->bind_param("isssss", $newid, $edt_firstname, $edt_lastname, $edt_dob, $edt_email, $sel_emaildisplay);                                  // <<<<<< YOU COMPLETE THIS LINE
-	// The above line binds parameters for the prepared query. While getting the information from the following variables,
-	// $newid, $edt_firstname, $edt_lastname, $edt_dob, $edt_email, $sel_emaildisplay
+    $newuserquery->bind_param("isssss", $newid, $edt_firstname, $edt_lastname, $edt_dob, $edt_email, $sel_emaildisplay);
 	
 	// RUN the query for database insert using the execute() method
 	$newuserquery->execute();
