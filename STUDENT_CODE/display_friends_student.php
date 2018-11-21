@@ -1,44 +1,9 @@
-<!-- THE BOOTSTRAP CASCADING STYLE SHEETS LIBRARY IS USED IN THIS APPLICATION UNDER THE MIT LICENSE. CSS IS DELIVERED
-THROUGH A CONTENT DELIVERY NETWORK (CDN). 
-
-The MIT License (MIT)
-
-Copyright (c) 2011-2018 Twitter, Inc.
-Copyright (c) 2011-2018 The Bootstrap Authors
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
-documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
-the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and 
-to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all 
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
-PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
-CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-THE LIBRARY IS PUSHED INTO A GITHUB REPOSITORY HERE: https://github.com/twbs/bootstrap/blob/v4.1.3/
-
--->
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <meta content="en-au" http-equiv="Content-Language" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title>Display Friends</title>
-<style>
-    body
-    {
-        background-color: #FFFFFF;
-        font-family: Helvetica;
-    }
-</style>
 </head>
 <body>
 <p>CIRCLE OF FRIENDS - DATABASE TEST&nbsp; (2) - DATA OUTPUT</p>
@@ -113,15 +78,8 @@ if (isset($_POST['btn_submit']))
     $schoolquery=$conn->prepare("SELECT person_id, attendance.school_id, schoolname, schoollocation
                                 FROM attendance, school_info
                                 WHERE person_id = ? AND attendance.school_id = school_info.school_id");
-                                // The above line selects the person_id, attendance.school_id, schoolname, schoollocation
-                                // columns from the attendance and school_info tables.
-                                // Where the person_id is equal to the $edt_userid variable, and attendance.schoolid
-                                // is equal to school_info.school_id.
-                                // This displays the users attended schools.
     // BINDING PARAMETERS
     $schoolquery->bind_param("s", $edt_userid);   
-    // The above line binds the variable; $edt_userid to a parameter holding a string datatype.
-    // This allows for no SQL injection to take place in production.
 
     // Run the query - through the execute function 
     $schoolquery->execute();
@@ -147,18 +105,12 @@ if (isset($_POST['btn_submit']))
    $friendquery=$conn->prepare("SELECT person1_id, person2_id, firstname, lastname
                                 FROM friends, user_info
                                 WHERE person1_id= ? AND friends.person2_id = user_info.person_id");
-                                // The aboce line selects the person1_id, person2_id, firstname and lastname
-                                // columns from the friends and user_info tables.
-                                // Where person1_id is equal to the variable; $edt_userid
-                                // which is binded to a parameter in the next statement.
-                                // And where friends.person2_id is equal to user_info.person_id
-                                // This displays the friends that the user is friended with.
 
    
    // BINDING PARAMETERS
    $friendquery->bind_param("s", $edt_userid);                                    
    // EXECUTE THE QUERY 
-   $friendquery->execute(); // This executes the query with the execute() function.
+   $friendquery->execute();
    
    // get the result            
    $friendqueryresult=$friendquery->get_result();
@@ -166,8 +118,8 @@ if (isset($_POST['btn_submit']))
    // Put a heading on the screen
    echo "</BR></BR>This persons friends are : </BR></BR>";
    // Loop though the friends and display them on screen
-   while ($friendqueryresultrow=mysqli_fetch_array($friendqueryresult)) // WHEN EXECUTED, THIS WHILE LOOP DISPLAYS THE
-   {                                                                    // USER'S ID, FIRSTNAME AND LASTNAME
+   while ($friendqueryresultrow=mysqli_fetch_array($friendqueryresult)) 
+   {                                                                   
        echo "<strong>User ID: </strong>";
        // DISPLAY THE PERSON2 ID - IN OTHER WORDS, THE LIST OF FRIENDS
        echo $friendqueryresultrow['person2_id'];
